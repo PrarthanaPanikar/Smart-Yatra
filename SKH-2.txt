@@ -1,0 +1,25 @@
+SKH-2 
+# 1. Create DB (psql)
+CREATE DATABASE smartyatra;
+
+# 2. Backend
+cd backend
+# Edit .env → set DB_PASSWORD
+npm run migrate
+npm run seed
+npm run dev        # → http://localhost:5000
+
+# 3. Frontend (new terminal)
+cd frontend
+npm run dev        # → http://localhost:5173
+
+
+
+# Backend is already running on port 5000
+# If you need to restart it:
+cd backend
+node src/server.js
+
+# Frontend (if not running):
+cd frontend
+npm run dev
