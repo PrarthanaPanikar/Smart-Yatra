@@ -5,7 +5,6 @@ import SmartMap from '../../components/map/SmartMap'
 import BusMarker from '../../components/map/BusMarker'
 import StatusBadge from '../../components/common/StatusBadge'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
-import RecoveryPanel from '../../components/resilience/RecoveryPanel'
 
 const StatCard = ({ label, value, sub, colour }) => (
   <div className={`rounded-xl p-5 border ${colour}`}>
@@ -21,7 +20,6 @@ export default function AdminDashboard() {
   const [reports, setReports] = useState([])
   const [selected, setSelected] = useState(null)
   const [loading, setLoading]   = useState(true)
-  const [activeTab, setActiveTab] = useState('fleet') // 'fleet' or 'resilience'
 
   const fetchData = useCallback(async () => {
     try {
@@ -97,40 +95,10 @@ export default function AdminDashboard() {
   return (
     <div className="p-4 max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Fleet Overview</h1>
         <span className="text-xs text-gray-400">Live · updates without refresh</span>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="flex border-b border-gray-200">
-        <button
-          onClick={() => setActiveTab('fleet')}
-          className={`px-6 py-3 font-medium border-b-2 transition-colors ${
-            activeTab === 'fleet'
-              ? 'border-blue-600 text-blue-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          🚌 Fleet Overview
-        </button>
-        <button
-          onClick={() => setActiveTab('resilience')}
-          className={`px-6 py-3 font-medium border-b-2 transition-colors ${
-            activeTab === 'resilience'
-              ? 'border-blue-600 text-blue-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          🛡️ System Resilience
-        </button>
-      </div>
-
-      {/* Resilience Tab */}
-      {activeTab === 'resilience' && <RecoveryPanel />}
-
-      {/* Fleet Tab */}
-      {activeTab === 'fleet' && (
-        <>
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard label="Total Buses" value={stats?.buses?.total}
@@ -265,8 +233,6 @@ export default function AdminDashboard() {
           )}
         </div>
       </div>
-        </>
-      )}
     </div>
   )
 }

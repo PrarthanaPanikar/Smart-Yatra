@@ -3,11 +3,6 @@ const QRCode = require('qrcode');
 const { db } = require('../config/db');
 const { BOOKING_TYPE, PARCEL_STATUS, PAYMENT_STATUS, URGENCY, FARE, AVG_SPEED_KMH } = require('../config/constants');
 
-// Resilience system
-const operationJournal = require('../resilience/operationJournal');
-const healthMonitor = require('../resilience/healthMonitor');
-const recoveryQueue = require('../resilience/recoveryQueue');
-
 const generateParcelId = (origin) => {
   const prefix = (origin || 'GEN').substring(0, 3).toUpperCase();
   const count = db.prepare("SELECT COUNT(*) as c FROM bookings WHERE booking_type = 'CARGO'").get().c + 1;
@@ -102,41 +97,6 @@ const createBooking = async (req, res) => {
     });
 
     const booking = txn();
-
-    // ═══ RESILIENCE: Journal booking creation ═══
-    try {
-      const systemState = healthMonitor.getState();
-      const eventId = `booking_${booking.id}`;
-      const journalPayload = {
-        bookingData: {
-          user_id: req.user.id,
-          bus_id: busId,
-          booking_type: bookingType,
-          from_stop: fromStop,
-          to_stop: toStop,
-          from_stop_id: fromStopId,
-          to_stop_id: toStopId,
-          seats: parseInt(seats) || 0,
-          goods_type: goodsType,
-          weight_kg: parseFloat(weightKg) || 0,
-          urgency: urgency,
-          total_amount: estimatedCost,
-          status: 'CONFIRMED'
-        }
-      };
-
-      if (systemState === 'OFFLINE') {
-        // Queue for later journaling
-        recoveryQueue.enqueue('booking_create', journalPayload, eventId);
-      } else {
-        // Journal immediately
-        operationJournal.log('booking_create', journalPayload, eventId);
-      }
-    } catch (resilErr) {
-      // Never break existing flow
-      console.error('[Resilience] Journal error:', resilErr.message);
-    }
-    // ═══ END RESILIENCE ═══
 
     // Generate QR
     let qrCodeDataUrl = null;

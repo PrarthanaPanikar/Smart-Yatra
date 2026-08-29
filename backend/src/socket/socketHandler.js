@@ -33,14 +33,6 @@ const setupSocket = (io) => {
     socket.on('unsubscribe:bus',   (busId) => socket.leave(`bus:${busId}`));
     socket.on('subscribe:booking', (id)    => socket.join(`booking:${id}`));
     socket.on('subscribe:all-buses', ()    => { if (role === 'ADMIN') socket.join('admin'); });
-    
-    // Resilience system subscriptions
-    socket.on('subscribe:system', () => {
-      if (role === 'ADMIN') {
-        socket.join('system-events');
-        console.log(`[Socket] Admin ${name} subscribed to system events`);
-      }
-    });
 
     socket.on('driver:status-update', async ({ busId, status }) => {
       if (role !== 'DRIVER') return;
