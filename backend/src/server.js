@@ -66,6 +66,7 @@ app.use('/api/driver',        require('./routes/driver'));
 app.use('/api/admin',         require('./routes/admin'));
 app.use('/api/parcels',       require('./routes/parcels'));
 app.use('/api/notifications', require('./routes/notifications'));
+app.use('/api/recovery',      require('./routes/recovery')); // Resilience system
 
 // ── Health check ───────────────────────────────────────────
 app.get('/api/health', (req, res) => {
@@ -89,6 +90,38 @@ app.use(errorHandler);
 const { setupSocket } = require('./socket/socketHandler');
 setupSocket(io);
 
+// ── Resilience System Setup ────────────────────────────────
+const healthMonitor = require('./resilience/healthMonitor');
+const recoveryEngine = require('./resilience/recoveryEngine');
+const backupManager = require('./resilience/backupManager');
+
+// Connect recovery engine to Socket.IO for broadcasting
+recoveryEngine.setIO(io);
+
+// Start health monitoring (check every 5 seconds)
+healthMonitor.startMonitoring(5000);
+
+// Listen for state changes and broadcast to clients
+healthMonitor.onStateChange((status) => {
+  io.emit('system:health', status);
+  console.log(`[System] Health state: ${status.state}`);
+  
+  // Auto-recovery on OFFLINE state
+  if (status.state === 'OFFLINE' && !recoveryEngine.recovering) {
+    console.log('[System] Auto-recovery triggered');
+    recoveryEngine.startRecovery().catch(err => {
+      console.error('[System] Auto-recovery failed:', err.message);
+    });
+  }
+});
+
+// Create initial backup on startup
+backupManager.createBackup('manual').catch(err => {
+  console.error('[System] Initial backup failed:', err.message);
+});
+
+console.log('✓ Resilience system initialized');
+
 // ── Start ──────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
@@ -98,6 +131,7 @@ server.listen(PORT, () => {
   console.log(`   Env     : ${process.env.NODE_ENV || 'development'}`);
   console.log(`   API     : http://localhost:${PORT}/api`);
   console.log(`   Health  : http://localhost:${PORT}/api/health`);
+  console.log(`   Recovery: http://localhost:${PORT}/api/recovery/health`);
   console.log('');
 });
 

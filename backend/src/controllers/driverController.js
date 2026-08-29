@@ -2,6 +2,11 @@ const { v4: uuidv4 } = require('uuid');
 const { db } = require('../config/db');
 const { PARCEL_STATUS, PARCEL_TRANSITIONS } = require('../config/constants');
 
+// Resilience system
+const operationJournal = require('../resilience/operationJournal');
+const healthMonitor = require('../resilience/healthMonitor');
+const recoveryQueue = require('../resilience/recoveryQueue');
+
 // GET /api/driver/bus
 const getMyBus = async (req, res) => {
   try {
@@ -168,6 +173,28 @@ const loadParcel = async (req, res) => {
     });
 
     const result = txn();
+
+    // ═══ RESILIENCE: Journal parcel load ═══
+    try {
+      const systemState = healthMonitor.getState();
+      const eventId = `parcel_${req.params.bookingId}`;
+      const journalPayload = {
+        parcelData: {
+          booking_id: req.params.bookingId,
+          actual_weight: result.actualKg,
+          status: PARCEL_STATUS.LOADED
+        }
+      };
+
+      if (systemState === 'OFFLINE') {
+        recoveryQueue.enqueue('parcel_create', journalPayload, eventId);
+      } else {
+        operationJournal.log('parcel_create', journalPayload, eventId);
+      }
+    } catch (resilErr) {
+      console.error('[Resilience] Parcel journal error:', resilErr.message);
+    }
+    // ═══ END RESILIENCE ═══
 
     res.json({
       message: 'Parcel marked as loaded',

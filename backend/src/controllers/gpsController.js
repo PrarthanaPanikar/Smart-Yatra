@@ -2,6 +2,11 @@ const { v4: uuidv4 } = require('uuid');
 const { db } = require('../config/db');
 const { GPS_STATUS, GPS } = require('../config/constants');
 
+// Resilience system
+const operationJournal = require('../resilience/operationJournal');
+const healthMonitor = require('../resilience/healthMonitor');
+const recoveryQueue = require('../resilience/recoveryQueue');
+
 const computeGpsStatus = (bus) => {
   if (!bus.last_gps_update) return GPS_STATUS.OFFLINE;
   const secondsAgo = (Date.now() - new Date(bus.last_gps_update).getTime()) / 1000;
@@ -41,6 +46,22 @@ const updateLocation = async (req, res) => {
       `INSERT INTO gps_telemetry (id, bus_id, latitude, longitude, accuracy, speed, heading, gps_source, timestamp)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
     ).run(uuidv4(), busId, latitude, longitude, accuracy ?? null, speed ?? null, heading ?? null, source, ts);
+
+    // ═══ RESILIENCE: Journal GPS update ═══
+    try {
+      const systemState = healthMonitor.getState();
+      const eventId = `gps_${busId}_${Date.now()}`;
+      const journalPayload = { busId, latitude, longitude, timestamp: ts };
+
+      if (systemState === 'OFFLINE') {
+        recoveryQueue.enqueue('gps_update', journalPayload, eventId);
+      } else {
+        operationJournal.log('gps_update', journalPayload, eventId);
+      }
+    } catch (resilErr) {
+      console.error('[Resilience] GPS journal error:', resilErr.message);
+    }
+    // ═══ END RESILIENCE ═══
 
     // Broadcast via Socket.IO
     const io = req.app.get('io');
