@@ -10,10 +10,11 @@ const ROLE_HOME = {
 
 const ROLE_LINKS = {
   ADMIN: [
-    { to: '/admin',          label: 'Dashboard' },
-    { to: '/admin/buses',    label: 'Fleet' },
-    { to: '/admin/reports',  label: 'Reports' },
-    { to: '/admin/bookings', label: 'Bookings' },
+    { to: '/admin',               label: 'Dashboard' },
+    { to: '/admin/buses',         label: 'Fleet' },
+    { to: '/admin/reports',       label: 'Reports' },
+    { to: '/admin/bookings',      label: 'Bookings' },
+    { to: '/admin/verification',  label: '📢 Verify' },
   ],
   DRIVER: [
     { to: '/driver',     label: 'Dashboard' },

@@ -8,10 +8,11 @@ import LoginPage    from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 
 // Admin
-import AdminDashboard from './pages/admin/AdminDashboard'
-import AdminBuses     from './pages/admin/AdminBuses'
-import AdminReports   from './pages/admin/AdminReports'
-import AdminBookings  from './pages/admin/AdminBookings'
+import AdminDashboard    from './pages/admin/AdminDashboard'
+import AdminBuses        from './pages/admin/AdminBuses'
+import AdminReports      from './pages/admin/AdminReports'
+import AdminBookings     from './pages/admin/AdminBookings'
+import AdminVerification from './pages/admin/AdminVerification'
 
 // Driver
 import DriverDashboard from './pages/driver/DriverDashboard'
@@ -88,6 +89,9 @@ export default function App() {
             } />
             <Route path="/admin/bookings" element={
               <ProtectedRoute roles={['ADMIN']}><AdminBookings /></ProtectedRoute>
+            } />
+            <Route path="/admin/verification" element={
+              <ProtectedRoute roles={['ADMIN']}><AdminVerification /></ProtectedRoute>
             } />
 
             {/* Driver */}

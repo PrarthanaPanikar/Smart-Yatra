@@ -8,6 +8,7 @@ import BusMarker from '../../components/map/BusMarker'
 import UserMarker from '../../components/map/UserMarker'
 import StatusBadge from '../../components/common/StatusBadge'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
+import ReportBox from '../../components/passenger/ReportBox'
 
 export default function PassengerDashboard() {
   const { location, error: locError, loading: locLoading, requestLocation } = useDeviceLocation()
@@ -185,6 +186,9 @@ export default function PassengerDashboard() {
           </div>
         </div>
       )}
+
+      {/* Challenge #2 — Passenger Information Report Box */}
+      <ReportBox buses={nearbyBuses} />
     </div>
   )
 }

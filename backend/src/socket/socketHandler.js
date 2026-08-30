@@ -33,6 +33,8 @@ const setupSocket = (io) => {
     socket.on('unsubscribe:bus',   (busId) => socket.leave(`bus:${busId}`));
     socket.on('subscribe:booking', (id)    => socket.join(`booking:${id}`));
     socket.on('subscribe:all-buses', ()    => { if (role === 'ADMIN') socket.join('admin'); });
+    // Challenge #2 — passengers can subscribe to their own report updates
+    socket.on('subscribe:my-reports', ()  => { if (role === 'PASSENGER') socket.join(`passenger:${userId}`); });
 
     socket.on('driver:status-update', async ({ busId, status }) => {
       if (role !== 'DRIVER') return;

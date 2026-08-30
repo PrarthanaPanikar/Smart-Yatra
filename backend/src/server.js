@@ -66,6 +66,7 @@ app.use('/api/driver',        require('./routes/driver'));
 app.use('/api/admin',         require('./routes/admin'));
 app.use('/api/parcels',       require('./routes/parcels'));
 app.use('/api/notifications', require('./routes/notifications'));
+app.use('/api/reports',       require('./routes/reports'));       // Challenge #2: passenger info reports
 
 // ── Health check ───────────────────────────────────────────
 app.get('/api/health', (req, res) => {

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import api from '../../services/api'
 import { getSocket, subscribeToAllBuses } from '../../services/socketService'
 import SmartMap from '../../components/map/SmartMap'
@@ -20,16 +21,19 @@ export default function AdminDashboard() {
   const [reports, setReports] = useState([])
   const [selected, setSelected] = useState(null)
   const [loading, setLoading]   = useState(true)
+  const [passengerReportCount, setPassengerReportCount] = useState(0)
 
   const fetchData = useCallback(async () => {
     try {
-      const [dashRes, busRes] = await Promise.all([
+      const [dashRes, busRes, infoStatsRes] = await Promise.all([
         api.get('/admin/dashboard'),
         api.get('/admin/buses'),
+        api.get('/reports/stats').catch(() => ({ data: { stats: { pending: 0 } } })),
       ])
       setStats(dashRes.data)
       setBuses(busRes.data.buses || [])
       setReports(dashRes.data.pendingReports || [])
+      setPassengerReportCount(infoStatsRes.data.stats?.pending ?? 0)
     } catch (err) {
       console.error('Dashboard fetch error:', err)
     } finally {
@@ -69,6 +73,10 @@ export default function AdminDashboard() {
         setReports(prev => [report, ...prev.slice(0, 4)])
         fetchData()
       })
+      // Challenge #2 — new passenger info reports
+      socket.on('passenger:report', () => {
+        setPassengerReportCount(n => n + 1)
+      })
     }
 
     return () => {
@@ -76,6 +84,7 @@ export default function AdminDashboard() {
       socket?.off('bus:occupancy')
       socket?.off('bus:status')
       socket?.off('driver:report')
+      socket?.off('passenger:report')
     }
   }, [fetchData])
 
@@ -206,7 +215,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* Pending reports */}
+          {/* Pending driver reports */}
           {reports.length > 0 && (
             <div className="bg-white rounded-xl shadow-sm border p-4">
               <h3 className="font-bold text-red-700 mb-3">⚠ Pending Reports</h3>
@@ -231,6 +240,32 @@ export default function AdminDashboard() {
               </div>
             </div>
           )}
+
+          {/* Challenge #2 — Passenger Information Reports alert */}
+          <div className={`rounded-xl border p-4 ${passengerReportCount > 0 ? 'bg-yellow-50 border-yellow-300' : 'bg-white border-gray-200'}`}>
+            <div className="flex items-center justify-between mb-2">
+              <h3 className={`font-bold text-sm ${passengerReportCount > 0 ? 'text-yellow-800' : 'text-gray-700'}`}>
+                📢 Information Verification
+              </h3>
+              {passengerReportCount > 0 && (
+                <span className="bg-yellow-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                  {passengerReportCount} pending
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-gray-500 mb-3">
+              {passengerReportCount > 0
+                ? `${passengerReportCount} passenger report(s) awaiting verification`
+                : 'No pending passenger reports'}
+            </p>
+            <Link to="/admin/verification"
+              className={`block w-full text-center text-xs font-semibold py-2 rounded-lg transition-colors
+                ${passengerReportCount > 0
+                  ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}>
+              {passengerReportCount > 0 ? '🔍 Review Reports' : 'View Verification Panel'}
+            </Link>
+          </div>
         </div>
       </div>
     </div>
