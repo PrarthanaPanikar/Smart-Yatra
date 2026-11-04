@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <!-- Background circle gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f0f4ff"/>
+    </radialGradient>
+    <!-- S letter gradient (blue) -->
+    <linearGradient id="sGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a56db"/>
+      <stop offset="100%" stop-color="#0a2d8f"/>
+    </linearGradient>
+    <!-- K letter gradient (green) -->
+    <linearGradient id="kGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16a34a"/>
+      <stop offset="100%" stop-color="#0d6b2e"/>
+    </linearGradient>
+    <!-- Y letter gradient (orange) -->
+    <linearGradient id="yGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <!-- Road gradient -->
+    <linearGradient id="roadGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#374151"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+    <!-- Sky/sun gradient -->
+    <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </radialGradient>
+    <!-- Green hill gradient -->
+    <linearGradient id="hillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+    <!-- Bus gradient -->
+    <linearGradient id="busGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <!-- Outer ring gradient -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a56db"/>
+      <stop offset="50%" stop-color="#16a34a"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── Outer decorative ring ──────────────────────────────── -->
+  <circle cx="200" cy="185" r="172" fill="none" stroke="url(#ringGrad)" stroke-width="3" opacity="0.6"/>
+  <circle cx="200" cy="185" r="168" fill="white"/>
+
+  <!-- ── Sky/hill background (top arc) ─────────────────────── -->
+  <ellipse cx="155" cy="128" rx="55" ry="40" fill="#dbeafe" opacity="0.6"/>
+
+  <!-- Sun -->
+  <circle cx="148" cy="118" r="22" fill="url(#sunGrad)"/>
+  <circle cx="148" cy="118" r="16" fill="#fcd34d"/>
+
+  <!-- Hill silhouette -->
+  <ellipse cx="148" cy="148" rx="52" ry="30" fill="url(#hillGrad)"/>
+
+  <!-- Temple silhouette on hill -->
+  <g fill="#1e3a5f" opacity="0.85">
+    <rect x="138" y="123" width="4" height="18"/>
+    <rect x="146" y="119" width="5" height="22"/>
+    <rect x="154" y="123" width="4" height="18"/>
+    <!-- Temple top spires -->
+    <polygon points="148,112 150,119 146,119"/>
+    <polygon points="140,116 142,123 138,123"/>
+    <polygon points="156,116 158,123 154,123"/>
+    <!-- Flag -->
+    <rect x="149" y="107" width="1" height="6"/>
+    <polygon points="150,108 154,110 150,112" fill="#ef4444"/>
+  </g>
+
+  <!-- ── Road (winding through K letter) ──────────────────── -->
+  <path d="M 200 82 Q 210 140 205 200 Q 200 250 210 310" 
+        fill="none" stroke="#374151" stroke-width="18" stroke-linecap="round"/>
+  <path d="M 200 82 Q 210 140 205 200 Q 200 250 210 310" 
+        fill="none" stroke="#4b5563" stroke-width="15" stroke-linecap="round"/>
+  <!-- Road dashes -->
+  <path d="M 202 110 L 203 130" stroke="white" stroke-width="2.5" stroke-dasharray="6,8" opacity="0.9"/>
+  <path d="M 203 145 L 204 165" stroke="white" stroke-width="2.5" stroke-dasharray="6,8" opacity="0.9"/>
+  <path d="M 204 185 L 205 205" stroke="white" stroke-width="2.5" stroke-dasharray="6,8" opacity="0.9"/>
+  <path d="M 205 225 L 206 245" stroke="white" stroke-width="2.5" stroke-dasharray="6,8" opacity="0.9"/>
+
+  <!-- ── S Letter ─────────────────────────────────────────── -->
+  <text x="62" y="250" font-family="Arial Black, Arial, sans-serif" font-weight="900"
+        font-size="148" fill="url(#sGrad)" letter-spacing="-2">S</text>
+  <!-- S shadow -->
+  <text x="65" y="253" font-family="Arial Black, Arial, sans-serif" font-weight="900"
+        font-size="148" fill="#0a2d8f" opacity="0.15" letter-spacing="-2">S</text>
+
+  <!-- ── K Letter ─────────────────────────────────────────── -->
+  <text x="172" y="250" font-family="Arial Black, Arial, sans-serif" font-weight="900"
+        font-size="148" fill="url(#kGrad)" letter-spacing="-2">K</text>
+
+  <!-- ── Y Letter ─────────────────────────────────────────── -->
+  <text x="278" y="250" font-family="Arial Black, Arial, sans-serif" font-weight="900"
+        font-size="148" fill="url(#yGrad)" letter-spacing="-2">Y</text>
+
+  <!-- ── GPS Location Pin ──────────────────────────────────── -->
+  <g transform="translate(196, 62)">
+    <circle cx="0" cy="-8" r="13" fill="#3b82f6" stroke="white" stroke-width="2.5"/>
+    <circle cx="0" cy="-8" r="5" fill="white"/>
+    <path d="M -6 -2 Q 0 14 0 14 Q 0 14 6 -2" fill="#3b82f6"/>
+  </g>
+
+  <!-- ── Green leaves / wheat (right side) ────────────────── -->
+  <!-- Leaf branch top right -->
+  <g transform="translate(320, 72)" fill="#16a34a">
+    <ellipse cx="0" cy="0" rx="18" ry="9" transform="rotate(-40)"/>
+    <ellipse cx="22" cy="-14" rx="15" ry="7" transform="rotate(-25)"/>
+    <ellipse cx="38" cy="-24" rx="12" ry="6" transform="rotate(-10)"/>
+    <line x1="0" y1="0" x2="38" y2="-24" stroke="#15803d" stroke-width="2"/>
+  </g>
+
+  <!-- Wheat stalks bottom right -->
+  <g transform="translate(348, 290)" fill="#f59e0b">
+    <line x1="0" y1="0" x2="0" y2="-55" stroke="#d97706" stroke-width="2"/>
+    <ellipse cx="-5" cy="-42" rx="4" ry="9" transform="rotate(-15 -5 -42)"/>
+    <ellipse cx="-5" cy="-30" rx="4" ry="9" transform="rotate(-15 -5 -30)"/>
+    <ellipse cx="5" cy="-46" rx="4" ry="9" transform="rotate(15 5 -46)"/>
+    <ellipse cx="5" cy="-34" rx="4" ry="9" transform="rotate(15 5 -34)"/>
+    <ellipse cx="0" cy="-55" rx="4" ry="9"/>
+    <!-- Second stalk -->
+    <line x1="12" y1="0" x2="10" y2="-50" stroke="#d97706" stroke-width="2"/>
+    <ellipse cx="5" cy="-38" rx="4" ry="9" transform="rotate(-12 5 -38)"/>
+    <ellipse cx="16" cy="-42" rx="4" ry="9" transform="rotate(12 16 -42)"/>
+    <ellipse cx="10" cy="-50" rx="4" ry="9"/>
+  </g>
+
+  <!-- Grass/field bottom -->
+  <g fill="#16a34a" opacity="0.7">
+    <ellipse cx="80" cy="310" rx="45" ry="12"/>
+    <ellipse cx="140" cy="315" rx="40" ry="10"/>
+    <ellipse cx="300" cy="312" rx="35" ry="11"/>
+    <ellipse cx="355" cy="308" rx="30" ry="9"/>
+  </g>
+
+  <!-- ── Bus ────────────────────────────────────────────────── -->
+  <g transform="translate(100, 280)">
+    <!-- Bus body -->
+    <rect x="0" y="-42" width="140" height="52" rx="6" fill="url(#busGrad)" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- Bus front face -->
+    <rect x="120" y="-40" width="20" height="48" rx="4" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1"/>
+    <!-- Windshield -->
+    <rect x="122" y="-36" width="14" height="22" rx="3" fill="#60a5fa" opacity="0.85"/>
+    <!-- Side windows -->
+    <rect x="8"  y="-36" width="22" height="16" rx="3" fill="#93c5fd" opacity="0.85"/>
+    <rect x="36" y="-36" width="22" height="16" rx="3" fill="#93c5fd" opacity="0.85"/>
+    <rect x="64" y="-36" width="22" height="16" rx="3" fill="#93c5fd" opacity="0.85"/>
+    <rect x="92" y="-36" width="22" height="16" rx="3" fill="#93c5fd" opacity="0.85"/>
+    <!-- Blue stripe along top -->
+    <rect x="0" y="-42" width="140" height="8" rx="4" fill="#2563eb"/>
+    <!-- Headlights -->
+    <circle cx="134" cy="-14" r="4" fill="#fef08a" stroke="#d97706" stroke-width="1"/>
+    <circle cx="134" cy="-4"  r="3" fill="#fca5a5" stroke="#ef4444" stroke-width="1"/>
+    <!-- Wheels -->
+    <circle cx="28"  cy="12" r="14" fill="#1f2937"/>
+    <circle cx="28"  cy="12" r="8"  fill="#374151"/>
+    <circle cx="28"  cy="12" r="4"  fill="#9ca3af"/>
+    <circle cx="108" cy="12" r="14" fill="#1f2937"/>
+    <circle cx="108" cy="12" r="8"  fill="#374151"/>
+    <circle cx="108" cy="12" r="4"  fill="#9ca3af"/>
+    <!-- Door -->
+    <rect x="52" y="-22" width="16" height="28" rx="2" fill="#bfdbfe" stroke="#93c5fd" stroke-width="1"/>
+    <!-- SKY text on bus -->
+    <text x="22" y="-12" font-family="Arial, sans-serif" font-weight="900"
+          font-size="13" fill="#1a56db">S</text>
+    <text x="31" y="-12" font-family="Arial, sans-serif" font-weight="900"
+          font-size="13" fill="#16a34a">K</text>
+    <text x="40" y="-12" font-family="Arial, sans-serif" font-weight="900"
+          font-size="13" fill="#f59e0b">Y</text>
+  </g>
+
+  <!-- ── "SMART KOPARGAON YATRA" Text ───────────────────────── -->
+  <text x="200" y="352" text-anchor="middle" font-family="Arial Black, Arial, sans-serif"
+        font-weight="900" font-size="18" letter-spacing="1">
+    <tspan fill="#1a56db">SMART </tspan>
+    <tspan fill="#16a34a">KOPARGAON </tspan>
+    <tspan fill="#f59e0b">YATRA</tspan>
+  </text>
+
+  <!-- ── Tagline row ────────────────────────────────────────── -->
+  <line x1="30" y1="368" x2="370" y2="368" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="200" y="384" text-anchor="middle" font-family="Arial, sans-serif"
+        font-size="8.5" fill="#6b7280" letter-spacing="0.5">
+    <tspan fill="#1a56db">👥 CONNECTING PEOPLE.</tspan>
+    <tspan>  |  </tspan>
+    <tspan fill="#16a34a">🌱 SUPPORTING FARMERS.</tspan>
+    <tspan>  |  </tspan>
+    <tspan fill="#f59e0b">🚌 MOVING KOPARGAON FORWARD.</tspan>
+  </text>
+
+  <!-- ── Three dots ────────────────────────────────────────── -->
+  <circle cx="180" cy="396" r="4" fill="#1a56db"/>
+  <circle cx="200" cy="396" r="4" fill="#16a34a"/>
+  <circle cx="220" cy="396" r="4" fill="#f59e0b"/>
+</svg>

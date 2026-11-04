@@ -59,7 +59,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-14">
           {/* Brand */}
           <Link to={home} className="flex items-center gap-2 font-bold text-lg">
-            <span className="text-2xl">🚌</span>
+            <img src="/sky-logo.svg" alt="SKY Logo" className="h-9 w-9 rounded-full bg-white p-0.5 shadow-sm" />
             <span>SmartYatra</span>
             <span className="text-xs opacity-70 font-normal hidden sm:inline">
               [{user.role}]

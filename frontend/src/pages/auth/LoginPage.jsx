@@ -41,8 +41,10 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center text-white mb-8">
-          <div className="text-6xl mb-4">🚌</div>
-          <h1 className="text-3xl font-bold">SmartYatra</h1>
+          <div className="flex justify-center mb-4">
+            <img src="/sky-logo.svg" alt="Smart Kopargaon Yatra" className="h-28 w-28 drop-shadow-xl" />
+          </div>
+          <h1 className="text-3xl font-bold">Smart Kopargaon Yatra</h1>
           <p className="text-blue-200 mt-2">Smart Public Transport Platform</p>
           <p className="text-xs text-blue-300 mt-1">Passenger · Farmer Cargo · GPS Tracking · Admin</p>
         </div>

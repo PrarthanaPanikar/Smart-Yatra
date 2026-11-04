@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="sG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a56db"/><stop offset="100%" stop-color="#0a2d8f"/>
+    </linearGradient>
+    <linearGradient id="kG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16a34a"/><stop offset="100%" stop-color="#0d6b2e"/>
+    </linearGradient>
+    <linearGradient id="yG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- White background circle -->
+  <circle cx="32" cy="32" r="31" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <!-- S K Y letters -->
+  <text x="4"  y="46" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="38" fill="url(#sG)">S</text>
+  <text x="22" y="46" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="38" fill="url(#kG)">K</text>
+  <text x="41" y="46" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="38" fill="url(#yG)">Y</text>
+  <!-- GPS pin -->
+  <circle cx="32" cy="9" r="5" fill="#3b82f6"/>
+  <circle cx="32" cy="9" r="2" fill="white"/>
+  <path d="M 29 12 Q 32 19 32 19 Q 32 19 35 12" fill="#3b82f6"/>
+</svg>

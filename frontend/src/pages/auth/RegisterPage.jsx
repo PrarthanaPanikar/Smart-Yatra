@@ -31,8 +31,10 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center text-white mb-8">
-          <div className="text-5xl mb-3">🚌</div>
-          <h1 className="text-2xl font-bold">SmartYatra</h1>
+          <div className="flex justify-center mb-3">
+            <img src="/sky-logo.svg" alt="Smart Kopargaon Yatra" className="h-20 w-20 drop-shadow-xl" />
+          </div>
+          <h1 className="text-2xl font-bold">Smart Kopargaon Yatra</h1>
           <p className="text-blue-200">Create Account</p>
         </div>
 
